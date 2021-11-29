@@ -28,9 +28,8 @@ class ReadFileUtil:
             self.data = list(self.reader)
         print("Finished reading file: " + str(len(self.data)))
         del self.data[0]
-        print("Finished reading file: " + str(len(self.data)))
         
-    # def ParseFileIntoArrays(self):
+    def ParseFileIntoArrays(self):
         """
         0 County
         1 Sex
@@ -47,14 +46,12 @@ class ReadFileUtil:
         0 Onset Year-month
         1 Age, 10,20,30,40,50,60,70,80
         """
-        print("Finished reading file: " + str(len(self.data)))
         print("Loading arrays..")
         tmpDate=[]
         temp=[]
         self.DeathData = []
         self.HospitalData = []
         self.InfectionData = []
-        print("Finished reading file: " + str(len(self.data)))
         for phrase in self.data:
             try:
                 if int(phrase[8]) > 0:
@@ -87,7 +84,6 @@ class ReadFileUtil:
         print("Total deaths: " + str(len(self.DeathData)) + ", should be 26,483")
         print("Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
         print("Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741")
-        print ("Hello World")
 
 
 
@@ -95,80 +91,80 @@ class ReadFileUtil:
         #
         # Lets get the unique months covered in the data
         #
-        UniqueMonths = [row[0] for row in InfectionData]
-        UniqueMonths = set(UniqueMonths)
-        UniqueMonths = (list(UniqueMonths))
-        UniqueMonths.sort()
-        print("Unique Months: " + str(UniqueMonths))
+        self.UniqueMonths = [row[0] for row in self.InfectionData]
+        self.UniqueMonths = set(self.UniqueMonths)
+        self.UniqueMonths = (list(self.UniqueMonths))
+        self.UniqueMonths.sort()
+        print("Unique Months: " + str(self.UniqueMonths))
         #print("Unique months: " + str(UniqueMonths))
         #print("Length: " + str(len(UniqueMonths)))
 
         print(str( self.UniqueAge))
         # lets build a table for number of people death
         print("Building death data")
-        MonthlyDeathData = [[""] + UniqueMonths]
-        CurrentAgeData=[]
-        PatientCount=0
-        LineCount = 0
+        self.MonthlyDeathData = [[""] + self.UniqueMonths]
+        self.CurrentAgeData=[]
+        self.PatientCount=0
+        self.LineCount = 0
         for age in self.UniqueAge:
-            CurrentAgeData = [age]
-            for month in UniqueMonths:
-                PatientCount = 0
+            self.CurrentAgeData = [age]
+            for month in self.UniqueMonths:
+                self.PatientCount = 0
                 for PatientRecord in self.DeathData:
                     if (PatientRecord[0] == month):
                         if (PatientRecord[1] == age and PatientRecord[1] == age):
-                            PatientCount = PatientCount + 1
-                CurrentAgeData.append(PatientCount)
-            MonthlyDeathData.append(CurrentAgeData)
-        with open("new_file_DeathDataRaw.csv","w+") as my_csv:
+                            self.PatientCount = self.PatientCount + 1
+                self.CurrentAgeData.append(self.PatientCount)
+            self.MonthlyDeathData.append(self.CurrentAgeData)
+        with open("new_file_DeathDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
-            csvWriter.writerows(MonthlyDeathData)
+            csvWriter.writerows(self.MonthlyDeathData)
         print("Finished")
 
 
         # lets build a table for number of people hospitalized
         print("Building Hospital data")
-        MonthlyHospitalData = [[""] + UniqueMonths]
-        CurrentAgeData=[]
-        PatientCount=0
+        self.MonthlyHospitalData = [[""] + self.UniqueMonths]
+        self.CurrentAgeData=[]
+        self.PatientCount=0
         LineCount = 0
         for age in self.UniqueAge:
-            CurrentAgeData = [age]
-            for month in UniqueMonths:
-                PatientCount = 0
+            self.CurrentAgeData = [age]
+            for month in self.UniqueMonths:
+                self.PatientCount = 0
                 for PatientRecord in self.HospitalData:
                     if (PatientRecord[0] == month):
                         if (PatientRecord[1] == age and PatientRecord[1] == age):
-                            PatientCount = PatientCount + 1
-                CurrentAgeData.append(PatientCount)
-            MonthlyHospitalData.append(CurrentAgeData)
-        with open("new_file_HospitalDataRaw.csv","w+") as my_csv:
+                            self.PatientCount = self.PatientCount + 1
+                self.CurrentAgeData.append(self.PatientCount)
+            self.MonthlyHospitalData.append(self.CurrentAgeData)
+        with open("new_file_HospitalDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
-            csvWriter.writerows(MonthlyHospitalData)
+            csvWriter.writerows(self.MonthlyHospitalData)
         print("Finished")
 
         # lets build a table for number of people infected
         print("Building Infected data")
 
-        MonthlyInfectedData = [[""] + UniqueMonths]
-        CurrentAgeData=[]
-        PatientCount=0
-        LineCount = 0
-        for age in UniqueAge:
-            CurrentAgeData = [age]
-            for month in UniqueMonths:
-                PatientCount = 0
-                for PatientRecord in InfectionData:
+        self.MonthlyInfectedData = [[""] + self.UniqueMonths]
+        self.CurrentAgeData=[]
+        self.PatientCount=0
+        self.LineCount = 0
+        for age in self.UniqueAge:
+            self.CurrentAgeData = [age]
+            for month in self.UniqueMonths:
+                self.PatientCount = 0
+                for PatientRecord in self.InfectionData:
                     if (PatientRecord[0] == month):
                         if (PatientRecord[1] == age and PatientRecord[1] == age):
-                            PatientCount = PatientCount + 1
-                CurrentAgeData.append(PatientCount)
-            MonthlyInfectedData.append(CurrentAgeData)
+                            self.PatientCount = self.PatientCount + 1
+                self.CurrentAgeData.append(self.PatientCount)
+            self.MonthlyInfectedData.append(self.CurrentAgeData)
         print("Finished")
 
-        with open("new_file_InfectedDataRaw.csv","w+") as my_csv:
+        with open("new_file_InfectedDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
-            csvWriter.writerows(MonthlyInfectedData)
+            csvWriter.writerows(self.MonthlyInfectedData)
         print("Finished")
 
 
@@ -180,19 +176,19 @@ class ReadFileUtil:
         '''For 50s, cases:217,861    Hospitalization: 12,268    Death: 1,710'''
 
         AgeRange = [10,20,30,40,50,60,70,80]
-        casecount = 0
-        Hospitalizationcount = 0
-        deathcount = 0
+        self.casecount = 0
+        self.Hospitalizationcount = 0
+        self.deathcount = 0
         for x in range(len(AgeRange)):
             for temp in self.InfectionData:
                 if temp[1] == 50:
-                    casecount = casecount + 1
+                    self.casecount = self.casecount + 1
             for temp in self.HospitalData:
                 if temp[1] == 50:
-                    Hospitalizationcount = Hospitalizationcount + 1
+                    self.Hospitalizationcount = self.Hospitalizationcount + 1
             for temp in self.DeathData:
                 if temp[1] == 50:
-                    deathcount = deathcount + 1
+                    self.deathcount = self.deathcount + 1
 
 
 
@@ -204,8 +200,7 @@ class ReadFileUtil:
         24,527
         '''
 
-        print("Total deaths: " + str(len(self.DeathData)) + ", should be 24,527")
-        print("Hospital total: " + str(len(self.HospitalData)), ", should be 79,773")
-        print("Infected total: " + str(len(self.InfectionData)+len(self.HospitalData)), ", should be 1,542,911")
-        print ("Hello World")
+        print("Total deaths: " + str(len(self.DeathData)) + ", should be 26,483")
+        print("Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
+        print("Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741")
 
