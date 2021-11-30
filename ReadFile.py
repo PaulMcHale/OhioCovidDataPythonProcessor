@@ -111,14 +111,19 @@ class ReadFileUtil:
             for month in self.UniqueMonths:
                 self.PatientCount = 0
                 for PatientRecord in self.DeathData:
-                    if (PatientRecord[0] == month):
-                        if (PatientRecord[1] == age and PatientRecord[1] == age):
-                            self.PatientCount = self.PatientCount + 1
+                    if (PatientRecord[0] == month and PatientRecord[1] == age):
+                        self.PatientCount = self.PatientCount + 1
                 self.CurrentAgeData.append(self.PatientCount)
             self.MonthlyDeathData.append(self.CurrentAgeData)
+
         with open("new_file_DeathDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
             csvWriter.writerows(self.MonthlyDeathData)
+
+        self.myTotal = 0
+        for m in self.MonthlyDeathData[1:]:
+            self.myTotal = self.myTotal + sum(m[1:])
+        print ("Doublecheck: " + str(self.myTotal))
         print("Finished")
 
 
@@ -138,14 +143,54 @@ class ReadFileUtil:
                             self.PatientCount = self.PatientCount + 1
                 self.CurrentAgeData.append(self.PatientCount)
             self.MonthlyHospitalData.append(self.CurrentAgeData)
+
         with open("new_file_HospitalDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
             csvWriter.writerows(self.MonthlyHospitalData)
+
+        self.myTotal = 0
+        for m in self.MonthlyHospitalData[1:]:
+            self.myTotal = self.myTotal + sum(m[1:])
+        print ("Doublecheck: " + str(self.myTotal))
         print("Finished")
+
+
+        # # lets build a table for number of people hospitalized
+        # print("Building Hospital data")
+        # self.TempData = self.HospitalData # Update
+        # self.MonthlyInfectedData = [[""] + self.UniqueMonths]
+        # self.CurrentAgeData=[]
+        # self.PatientCount=0
+        # self.LineCount = 0
+        # for age in self.UniqueAge:
+        #     self.CurrentAgeData = [age]
+        #     for month in self.UniqueMonths:
+        #         self.PatientCount = 0
+        #         for PatientRecord in self.TempData:
+        #             if (PatientRecord[0] == month and PatientRecord[1] == age):
+        #                 self.PatientCount = self.PatientCount + 1
+        #         self.CurrentAgeData.append(self.PatientCount)
+        #     self.MonthlyInfectedData.append(self.CurrentAgeData)
+        # self.MonthlyHospitalData = self.TempData   # Update 
+        # self.TempData = []
+        # with open("new_file_HospitalDataRaw.csv","w") as my_csv:
+        #     csvWriter = csv.writer(my_csv,delimiter=',')
+        #     csvWriter.writerows(self.MonthlyHospitalData)
+        # print("Finished")
+
+
+
+
+
+
+
+
+
+
 
         # lets build a table for number of people infected
         print("Building Infected data")
-
+        self.TempData = self.InfectionData
         self.MonthlyInfectedData = [[""] + self.UniqueMonths]
         self.CurrentAgeData=[]
         self.PatientCount=0
@@ -154,17 +199,21 @@ class ReadFileUtil:
             self.CurrentAgeData = [age]
             for month in self.UniqueMonths:
                 self.PatientCount = 0
-                for PatientRecord in self.InfectionData:
-                    if (PatientRecord[0] == month):
-                        if (PatientRecord[1] == age and PatientRecord[1] == age):
-                            self.PatientCount = self.PatientCount + 1
+                for PatientRecord in self.TempData:
+                    if (PatientRecord[0] == month and PatientRecord[1] == age):
+                        self.PatientCount = self.PatientCount + 1
                 self.CurrentAgeData.append(self.PatientCount)
             self.MonthlyInfectedData.append(self.CurrentAgeData)
-        print("Finished")
-
         with open("new_file_InfectedDataRaw.csv","w") as my_csv:
             csvWriter = csv.writer(my_csv,delimiter=',')
             csvWriter.writerows(self.MonthlyInfectedData)
+
+        self.myTotal = 0
+        for m in self.MonthlyInfectedData[1:]:
+            self.myTotal = self.myTotal + sum(m[1:])
+        print ("Doublecheck: " + str(self.myTotal))
+            
+    
         print("Finished")
 
 
@@ -175,20 +224,20 @@ class ReadFileUtil:
         '''print("Looking activity by age: ")'''
         '''For 50s, cases:217,861    Hospitalization: 12,268    Death: 1,710'''
 
-        AgeRange = [10,20,30,40,50,60,70,80]
-        self.casecount = 0
-        self.Hospitalizationcount = 0
-        self.deathcount = 0
-        for x in range(len(AgeRange)):
-            for temp in self.InfectionData:
-                if temp[1] == 50:
-                    self.casecount = self.casecount + 1
-            for temp in self.HospitalData:
-                if temp[1] == 50:
-                    self.Hospitalizationcount = self.Hospitalizationcount + 1
-            for temp in self.DeathData:
-                if temp[1] == 50:
-                    self.deathcount = self.deathcount + 1
+        # AgeRange = [10,20,30,40,50,60,70,80]
+        # self.casecount = 0
+        # self.Hospitalizationcount = 0
+        # self.deathcount = 0
+        # for x in range(len(AgeRange)):
+        #     for temp in self.InfectionData:
+        #         if temp[1] == 50:
+        #             self.casecount = self.casecount + 1
+        #     for temp in self.HospitalData:
+        #         if temp[1] == 50:
+        #             self.Hospitalizationcount = self.Hospitalizationcount + 1
+        #     for temp in self.DeathData:
+        #         if temp[1] == 50:
+        #             self.deathcount = self.deathcount + 1
 
 
 

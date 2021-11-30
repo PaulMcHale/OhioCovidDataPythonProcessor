@@ -8,8 +8,11 @@ myReadFile = ReadFile.ReadFileUtil("Test")
 
 myReadFile.ParseFileIntoArrays()
 myReadFile.GenerateCSVFiles()
-myStr = os.getcwd()
+myReadFile.PrintStastics()
 
-print("Current working directory: " + myStr)
+# myStr = os.getcwd()
+# print("Current working directory: " + myStr)
+
+
 
 sys.exit()
