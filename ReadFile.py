@@ -22,11 +22,11 @@ class ReadFileUtil:
         A. Read file into memoy, remove first line
         B. 
         """
-        print("\n\n\nReading file into memory")
-        with open('COVIDDeathData_CountyOfResidence 2021_11_28.csv', newline='') as f:
+        print("\n\n\nReadFileUtil: Reading file into memory")
+        with open(InputFile, newline='') as f:
             self.reader = csv.reader(f)
             self.data = list(self.reader)
-        print("Finished reading file: " + str(len(self.data)))
+        print("ReadFileUtil: Finished reading file: " + str(len(self.data)))
         del self.data[0]
         
     def ParseFileIntoArrays(self):
@@ -46,7 +46,7 @@ class ReadFileUtil:
         0 Onset Year-month
         1 Age, 10,20,30,40,50,60,70,80
         """
-        print("Loading arrays..")
+        print("ParseFileIntoArrays: Loading arrays..")
         tmpDate=[]
         temp=[]
         self.DeathData = []
@@ -73,17 +73,17 @@ class ReadFileUtil:
                         for x in range(int(phrase[6])):
                             self.InfectionData.append([temp[9], self.AgeConvert[temp[2]]])
             except:
-                print("Error found")
-                print(str(phrase)+"\n")
+                print("ParseFileIntoArrays: Error found")
+                print("ParseFileIntoArrays: " + str(phrase)+"\n")
                 sys.exit()
 
         del tmpDate, temp
-        print("Loading complete\n")
+        print("ParseFileIntoArrays: Loading complete")
 
 
-        print("Total deaths: " + str(len(self.DeathData)) + ", should be 26,483")
-        print("Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
-        print("Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741")
+        # print("Total deaths: " + str(len(self.DeathData)) + ", should be 26,483")
+        # print("Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
+        # print("Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741")
 
 
 
@@ -95,13 +95,9 @@ class ReadFileUtil:
         self.UniqueMonths = set(self.UniqueMonths)
         self.UniqueMonths = (list(self.UniqueMonths))
         self.UniqueMonths.sort()
-        print("Unique Months: " + str(self.UniqueMonths))
-        #print("Unique months: " + str(UniqueMonths))
-        #print("Length: " + str(len(UniqueMonths)))
 
-        print(str( self.UniqueAge))
         # lets build a table for number of people death
-        print("Building death data")
+        print("GenerateCSVFiles: Building death data")
         self.MonthlyDeathData = [[""] + self.UniqueMonths]
         self.CurrentAgeData=[]
         self.PatientCount=0
@@ -123,12 +119,12 @@ class ReadFileUtil:
         self.myTotal = 0
         for m in self.MonthlyDeathData[1:]:
             self.myTotal = self.myTotal + sum(m[1:])
-        print ("Doublecheck: " + str(self.myTotal))
-        print("Finished")
+        print ("GenerateCSVFiles: Doublecheck: " + str(self.myTotal))
+        print("GenerateCSVFiles: Finished")
 
 
         # lets build a table for number of people hospitalized
-        print("Building Hospital data")
+        print("GenerateCSVFiles: Building Hospital data")
         self.MonthlyHospitalData = [[""] + self.UniqueMonths]
         self.CurrentAgeData=[]
         self.PatientCount=0
@@ -151,8 +147,8 @@ class ReadFileUtil:
         self.myTotal = 0
         for m in self.MonthlyHospitalData[1:]:
             self.myTotal = self.myTotal + sum(m[1:])
-        print ("Doublecheck: " + str(self.myTotal))
-        print("Finished")
+        print ("GenerateCSVFiles: Doublecheck: " + str(self.myTotal))
+        print("GenerateCSVFiles: Finished")
 
 
         # # lets build a table for number of people hospitalized
@@ -189,7 +185,7 @@ class ReadFileUtil:
 
 
         # lets build a table for number of people infected
-        print("Building Infected data")
+        print("GenerateCSVFiles: Building Infected data")
         self.TempData = self.InfectionData
         self.MonthlyInfectedData = [[""] + self.UniqueMonths]
         self.CurrentAgeData=[]
@@ -211,10 +207,10 @@ class ReadFileUtil:
         self.myTotal = 0
         for m in self.MonthlyInfectedData[1:]:
             self.myTotal = self.myTotal + sum(m[1:])
-        print ("Doublecheck: " + str(self.myTotal))
+        print ("GenerateCSVFiles: Doublecheck: " + str(self.myTotal))
             
     
-        print("Finished")
+        print("GenerateCSVFiles: Finished")
 
 
     '''x=numpy.array (list)
@@ -249,7 +245,7 @@ class ReadFileUtil:
         24,527
         '''
 
-        print("Total deaths: " + str(len(self.DeathData)) + ", should be 26,483")
-        print("Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
-        print("Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741")
+        print("PrintStastics: Death total: " + str(len(self.DeathData)) + ", should be 26,483")
+        print("PrintStastics: Hospital total: " + str(len(self.HospitalData)), ", should be 85,694")
+        print("PrintStastics: Infected total: " + str(len(self.InfectionData)), ", should be 1,677,741\n")
 

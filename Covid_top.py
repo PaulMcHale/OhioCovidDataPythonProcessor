@@ -4,15 +4,12 @@ import os
 import ReadFile
 
 
-myReadFile = ReadFile.ReadFileUtil("Test")
+myReadFile = ReadFile.ReadFileUtil("COVIDDeathData_CountyOfResidence 2021_11_28.csv")
 
 myReadFile.ParseFileIntoArrays()
+myReadFile.PrintStastics()
 myReadFile.GenerateCSVFiles()
 myReadFile.PrintStastics()
-
-# myStr = os.getcwd()
-# print("Current working directory: " + myStr)
-
 
 
 sys.exit()
